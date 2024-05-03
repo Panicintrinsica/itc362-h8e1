@@ -2,6 +2,8 @@ package com.corbin.msu.photogallery
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.corbin.msu.photogallery.databinding.ListItemGalleryBinding
@@ -16,22 +18,29 @@ class PhotoViewHolder(
     }
 }
 
-class PhotoListAdapter(
-    private val galleryItems: List<GalleryItem>
-) : RecyclerView.Adapter<PhotoViewHolder>() {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): PhotoViewHolder {
+class PhotoListAdapter : PagingDataAdapter<GalleryItem, PhotoViewHolder>(GalleryItemComparator) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemGalleryBinding.inflate(inflater, parent, false)
         return PhotoViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val item = galleryItems[position]
-        holder.bind(item)
+        val item = getItem(position)
+        if (item != null) {
+            holder.bind(item)
+        }
     }
 
-    override fun getItemCount() = galleryItems.size
+    object GalleryItemComparator : DiffUtil.ItemCallback<GalleryItem>() {
+        override fun areItemsTheSame(oldItem: GalleryItem, newItem: GalleryItem): Boolean {
+            // Id is unique.
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: GalleryItem, newItem: GalleryItem): Boolean {
+            return oldItem == newItem
+        }
+    }
 }

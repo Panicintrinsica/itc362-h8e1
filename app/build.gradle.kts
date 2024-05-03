@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.converter.moshi)
     implementation(libs.moshi.kotlin.codegen)
     implementation(libs.coil)
+    implementation(libs.androidx.paging.runtime.ktx)
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
 
     testImplementation(libs.junit)
