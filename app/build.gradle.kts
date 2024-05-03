@@ -59,7 +59,8 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.converter.moshi)
     implementation(libs.moshi.kotlin.codegen)
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
+    implementation(libs.coil)
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
